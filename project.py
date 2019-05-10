@@ -16,13 +16,10 @@ from bs4         import BeautifulSoup as bs
 def parse_html(path, uid):
 
   # Because of varying columns or value descriptions
-  # a person is represented as a list where each element 
-  # is a tuple. The first value of the tuple coresponds
-  # to the index (what will be used as column names later)
-  # and the second value corresponds to the actual value
-  # of that index.
+  # a person is represented as their own dataframe.
+  # We have to combine these dataframes to form our
+  # full dataset, which we will do later.
 
-  person_data = {}
   cols = []
   vals = []
 
@@ -55,7 +52,10 @@ def parse_html(path, uid):
     if len(data) != 2:
         continue
 
+    # The first <td> corresponds to the column name
     cols.append(data[0].text)
+
+    # The second <td> corresponds to the value
 
     # Occasionally images are provided 
     # as proof of identity. This will 
@@ -66,10 +66,6 @@ def parse_html(path, uid):
     else:
       vals.append(data[1].text)
     
-
-  # People are represented as a dictionary
-  # where the key is the website's unique ID
-  # and the value is the list of tuples created earlier
   
   cols.append('uid')
   vals.append(uid)
@@ -85,13 +81,54 @@ def save_page(u_id):
     file.write(page.content.decode('utf-8'))
 
 def load_page(path):
+  '''
+  Opens a file in Beautiful Soup with html parser
+  Beatiful Soup miust be imported as bs to make this work.
+
+  from bs4 import BeautifulSoup as bs
+  '''
+
   with open(path) as fp:
     page = bs(fp, 'html.parser')
-
   return page
 
 def get_page(url):
   return requests.get(url)
+
+# def formatted_print(person):
+#   # print(person)
+#   # pattern = r'[0-9][0-9][0-9][0-9][0-9]'
+#   # key     = str(next(iter(person)))
+#   # uid     = re.findall(pattern, key)[0]
+#   # print(pattern.match(name))
+#   # # print(name)
+
+#   uid = str(person['uid'][0])
+#   # pad_len = max([len(pair[0]) for pair in person[uid]])
+#   pad_len = 32
+
+#   os.system('clear')
+#   print('\n==== ID:', uid, '=' * 59)
+
+#   vals = person.values[0]
+#   col_labels = list(person)
+  
+#   for i in range (len(col_labels)):
+#     print(col_labels[i].ljust(pad_len), ' : ', repr(vals[i]))
+
+#   print('=' * 72, '\n')
+
+def get_uID(filename):
+  pattern = r'[0-9][0-9][0-9][0-9][0-9]+'
+  uid     = re.findall(pattern, filename)[0]
+  return str(uid)
+
+def save_person(person):
+  uid = str(person['uid'][0])
+  pickle.dump(person, open(os.path.join('persons', uid + '.pickle'), 'wb'))
+
+def load_person(filename):
+  return pickle.load(open(filename, 'rb'))
 
 def scrape(unique_ids):
   times = []
@@ -112,41 +149,6 @@ def scrape(unique_ids):
 
     except Exception as e:
         print(e)
-
-def formatted_print(person):
-  # print(person)
-  # pattern = r'[0-9][0-9][0-9][0-9][0-9]'
-  # key     = str(next(iter(person)))
-  # uid     = re.findall(pattern, key)[0]
-  # print(pattern.match(name))
-  # # print(name)
-
-  uid = str(person['uid'][0])
-  # pad_len = max([len(pair[0]) for pair in person[uid]])
-  pad_len = 32
-
-  os.system('clear')
-  print('\n==== ID:', uid, '=' * 59)
-
-  vals = person.values[0]
-  col_labels = list(person)
-  
-  for i in range (len(col_labels)):
-    print(col_labels[i].ljust(pad_len), ' : ', repr(vals[i]))
-
-  print('=' * 72, '\n')
-
-def get_uID(filename):
-  pattern = r'[0-9][0-9][0-9][0-9][0-9]+'
-  uid     = re.findall(pattern, filename)[0]
-  return str(uid)
-
-def save_person(person):
-  uid = str(person['uid'][0])
-  pickle.dump(person, open(os.path.join('persons', uid + '.pickle'), 'wb'))
-
-def load_person(filename):
-  return pickle.load(open(filename, 'rb'))
 
 def process_HTML():
   num_of_files = len(os.listdir('pages'))
@@ -220,12 +222,9 @@ def load(name):
 
 def main():
   # parse_html()
-  process_HTML()
-  process_dataframes()
-
-  # list_df = load('all_df')
-
-  combine_dataframes(list_df)
+  # process_HTML()
+  # process_dataframes()
+  # combine_dataframes(list_df)
 
 if __name__ == "__main__":
   main()
