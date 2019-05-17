@@ -5,6 +5,17 @@ The VDC dataset has already been scraped, and that's the dataframe that's being 
 http://vdc-sy.net/en/
 
 
+HRDAG
+An organization that posted their methodology for removing duplicates, among oter stuff. Ther page about SYria is linked to here:
+
+https://hrdag.org/syria/
+
+And their actual technical memo is here:
+
+https://hrdag.org/wp-content/uploads/2016/07/HRDAG-AI-memo.pdf
+
+
+
 Things to do:
 
 A number of dataframes failed to combine due to duplicate columns that are not beiong renamed with the rename_dup_cols() function for some reason. These dataframes can be loaded with  load('failed_df'). Once columns are renamed such that there are no duplicate names, they can be combined with combine_dataframes.
