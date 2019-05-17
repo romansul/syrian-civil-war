@@ -1,5 +1,10 @@
 # The Civil War in Syria
 
+The VDC dataset has already been scraped, and that's the dataframe that's being used right now. Here's the link to that site:
+
+http://vdc-sy.net/en/
+
+
 Things to do:
 
 A number of dataframes failed to combine due to duplicate columns that are not beiong renamed with the rename_dup_cols() function for some reason. These dataframes can be loaded with  load('failed_df'). Once columns are renamed such that there are no duplicate names, they can be combined with combine_dataframes.
