@@ -1,5 +1,10 @@
 # The Civil War in Syria
 
+Here's a link to a [visualization of refugee flow](https://www.lucify.com/the-flow-towards-europe/  )
+
+And here's the [GitHub page for that project](https://github.com/lucified/lucify-refugees  ).
+
+
 The VDC dataset has already been scraped, and that's the dataframe that's being used right now. Here's the link to that site:
 
 http://vdc-sy.net/en/
