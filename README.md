@@ -1,5 +1,8 @@
 # The Civil War in Syria
 
+[Research Proposal based on this data](https://docs.google.com/document/d/1JcYInMT4fDYMPdmvJYAiZjEA5KkklTwUUmUY-SbB2MU/edit?usp=sharing)
+
+
 Here's a link to a [visualization of refugee flow](https://www.lucify.com/the-flow-towards-europe/  )
 
 And here's the [GitHub page for that project](https://github.com/lucified/lucify-refugees  ).
